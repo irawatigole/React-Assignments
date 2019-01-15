@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> List Items</title>
+        <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>   
+        <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/babel">
+            const rootHandle = document.getElementById('root');
+            
+            class ListItem extends React.Component {
+              
+                render() {
+                    return (
+                        <li> <span>{ this.props.name }</span> <button onClick={this.props.handleDelete}> Delete </button></li>
+                    )
+                }
+            }
+           
+            class List extends React.Component {
+                constructor(props) {
+                super(props); 
+                this.state = {
+                    items: [],
+                    title: ''
+                }
+                this.handleClick = this.handleClick.bind(this);
+                this.handleChange = this.handleChange.bind(this);
+                this.handleDelete = this.handleDelete.bind(this);
+                }
+                
+                handleClick(e) {
+                        this.setState(prevState => ({
+                            items: prevState.items.concat([this.state.title]),
+                            title: ''
+                        }));
+                }
+                handleChange(e) {     
+                    this.setState({
+                        title: e.target.value
+                    })      
+                }
+                handleDelete(e) {
+                    let index = this.state.items.findIndex(item => item == e.target.parentNode.children[0].textContent) 
+                    if(index >= 0) {
+                        const updatedState = [].concat(this.state.items);
+                        updatedState.splice(index, 1);
+                        this.setState({
+                            items: updatedState
+                        })
+                    }          
+                }
+                
+                render() {
+                return (
+                    <div>
+                        <h1>List of Items</h1>
+                        <ul>
+                            { this.state.items.map((item,index) => <ListItem 
+                            name={item} 
+                            key={index} 
+                            handleDelete={this.handleDelete} />) /*this.state.items.map((item,index) => <li> <span>{item}</span> <button onClick={this.handleDelete}> Delete </button> </li>)*/}
+                            
+                        </ul>
+                    <input type='text' value={this.state.title} onChange={this.handleChange} placeholder='Enter list item' />
+                    <input type='button' value='Add' onClick={this.handleClick} />
+                    </div> 
+                )
+            }
+        }
+        ReactDOM.render(<List />, rootHandle);
+        </script>
+     
+    </body>
+</html>

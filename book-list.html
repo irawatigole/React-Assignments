@@ -1,0 +1,88 @@
+<!-- Create a webpage with an h1 of "My Book List".
+Copy this array of books:
+  const books = [
+    {
+      title: 'The Design of EveryDay Things',
+      author: 'Don Norman',
+      alreadyRead: false
+    }, {
+      title: 'The Most Human Human',
+      author: 'Brian Christian',
+      alreadyRead: true
+    }
+  ];
+Iterate through the array of books. For each book, create a li element with the book title and author and append it to the page.
+Change the style of the background of the book listing depending on whether you have read it or not. -->
+
+
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Book List </title>
+        <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>   
+        <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/babel">
+            const rootHandle = document.getElementById('root');
+
+          const books = [
+    {
+      title: 'The Design of EveryDay Things',
+      author: 'Don Norman',
+      alreadyRead: false
+    }, {
+      title: 'The Most Human Human',
+      author: 'Brian Christian',
+      alreadyRead: true
+    }
+];
+function BookList() {
+
+    return (
+        <div>
+            <ul>
+                {books.map((book, index) => <Color title={book.title} author={book.author} alreadyRead={book.alreadyRead} /> )}
+               
+            </ul> 
+        </div> 
+    )
+    
+}
+
+function Color(props){
+                return (
+                    <div>
+                        <p style={tagStyle1 }> {conditionTrue(props)} </p>
+                        <p style={tagStyle2}>{conditionFalse(props)} </p>
+                    </div>
+            )
+            } 
+            function conditionTrue(props) {
+                if(props.alreadyRead){
+                    return props.title; 
+            }
+            } 
+            function conditionFalse(props) {
+                if(!props.alreadyRead){
+                    return props.title; 
+            }
+        }
+        let tagStyle1 = {
+            backgroundColor: 'green'
+        }
+        let tagStyle2 = {
+            backgroundColor: 'red'
+        }
+      
+
+ReactDOM.render(<BookList />, rootHandle); 
+            
+        </script>
+     
+    </body>
+</html>

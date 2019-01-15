@@ -1,0 +1,67 @@
+
+<!-- Write an Event Handler function that read the text inside an input field and appends the specified text to a list inside an HTML page. -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> List Items</title>
+        <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>   
+        <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/babel">
+            const rootHandle = document.getElementById('root');
+            
+            class ListItem extends React.Component {
+              
+                render() {
+                    return (
+                        <li> {this.props.name} </li>
+                    )
+                }
+            }
+           
+            class List extends React.Component {
+                constructor(props) {
+                super(props); 
+                this.state = {
+                    items: [],
+                    title: ''
+                }
+                this.handleClick = this.handleClick.bind(this);
+                this.handleChange = this.handleChange.bind(this);
+                }
+                
+                handleClick(e) {
+                        this.setState(prevState => ({
+                            items: prevState.items.concat([this.state.title]),
+                            title: ''
+                        }));
+                }
+                handleChange(e) {     
+                    this.setState({
+                        title: e.target.value
+                    })      
+                }
+                
+                render() {
+                return (
+                    <div>
+                        <h1>List of Items</h1>
+                        <ul>
+                            { this.state.items.map((item,index) => <ListItem name={item} key={index} />)}
+                            
+                        </ul>
+                    <input type='text' value={this.state.title} onChange={this.handleChange} placeholder='Enter list item' />
+                    <input type='button' value='Add' onClick={this.handleClick} />
+                    </div> 
+                )
+            }
+        }
+        ReactDOM.render(<List />, rootHandle);
+        </script>
+     
+    </body>
+</html>

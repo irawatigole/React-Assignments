@@ -1,0 +1,51 @@
+<!-- Given a button on a web page, Add functionality such that, on click of a button, generate a random number between 1 - 100 and display -->
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Random number </title>
+        <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>   
+        <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/babel">
+         const rootHandle = document.getElementById('root');
+
+function GenerateRandom() {
+    return (
+        <div>
+            <Button /> 
+        </div> 
+    )
+}
+class Button extends React.Component {
+
+constructor(props) {
+  super(props);
+  this.handleClick = this.handleClick.bind(this);
+  this.state = { random: '' };
+}
+
+handleClick() {
+ 
+  const randomNumber = Math.ceil(Math.random()*100);
+  this.setState({ random: this.state.random + randomNumber });
+}
+
+render() {
+  return (
+    <div>
+      <button onClick={this.handleClick.bind(this)}>GenerateRandom</button>
+      <p>{this.state.random}</p>
+    </div>
+  );
+}
+}
+ReactDOM.render(<GenerateRandom />, rootHandle);
+        </script>
+     
+    </body>
+</html>

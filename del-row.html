@@ -1,0 +1,102 @@
+<!-- Write a JS program that takes an e-mail from an input field and deletes matching rows from a table. If no entry is found, an error should be displayed in a <div> with ID "results". The error should read "Not found." -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Delete Row</title>
+        <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>   
+        <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/babel">
+            const rootHandle = document.getElementById('root');
+
+class Emails extends React.Component {
+    constructor(props) {
+        super(props); 
+        this.state = {
+            emails: [
+                { name: 'Eve', email: 'eve@gmail.com'}, { name: 'brad', email: 'brad@gmail.com'}, { name: 'adam', email: 'adam@gmail.com'}
+            ],
+            filteredText: ''
+        }
+        this.deleteEmail = this.deleteEmail.bind(this); 
+        // this.handleChange = this.handleChange.bind(this);
+    }
+    handleUserInput(filterText) {
+   this.setState({filterText: filterText});
+};
+    // handleChange(e) {     
+    //                 this.setState({
+    //                     email: e.target.value
+    //                 })      
+    //             }
+    deleteEmail(email) {
+//         var index = this.state.emails.indexOf(email);
+//   this.state.emails.splice(index, 1);
+//   console.log(index) 
+//   this.setState(this.state.emails); 
+console.log(indexOf(email))
+var index = this.state.emails.indexOf(email);
+  this.state.emails.splice(index, 1);
+  this.setState(this.state.emails);
+    }
+    handleTable(e) {
+  var item = {
+    name: e.target.name,
+    email: e.target.email,
+    value: e.target.value
+  };
+var emails = this.state.emails.slice();
+var newEmails = emails.map(function(email) {
+
+  for (var key in email) {
+    if (key == item.name) {
+      email[key] = item.value;
+
+    }
+  }
+  return email;
+});
+  this.setState({emails:newEmails});
+
+};
+buildRow(email,index) {
+                return (
+                    <tr key={index}>             
+                        <td>{email.name}</td> 
+                        <td>{email.email}</td>                 
+                    </tr>
+                )
+            }
+    render() {
+        return (
+            <div>
+                <table border='1'>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+                
+                </thead>
+                    <tbody>
+                            { this.state.emails.map((email,index) => this.buildRow(email,index))}     
+                            </tbody>  
+                </table>
+                 Email: <input type='text' name='email' onChange={this.handleChange}  />
+                <button onClick={this.deleteEmail}>Delete</button>
+                
+            </div> 
+        )
+    }
+}
+ReactDOM.render(<Emails />, rootHandle); 
+           
+            
+        </script>
+     
+    </body>
+</html>
